@@ -2,8 +2,7 @@ version: '3'
 
 services:
   db:
-    container_name: db
-    image: mariadb:latest
+    image: mariadb
     restart: always
     env_file: .env
     environment:
@@ -14,6 +13,11 @@ services:
       - backend
     ports:
       - "3306:3306"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 1s
+      timeout: 1s
+      retries: 60
 
   filter:
     build:
@@ -21,11 +25,12 @@ services:
     restart: no
     env_file: .env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    volumes:
+      - ./data:/app/data
     networks:
       - backend
-    volumes:
-      - "./data/data.csv:/src"
 
 #  web:
 #    build:
@@ -43,4 +48,3 @@ services:
 networks:
   backend:
     driver: bridge
-

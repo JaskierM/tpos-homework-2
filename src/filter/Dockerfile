@@ -1,8 +1,7 @@
 FROM python:3.11
 
-RUN mkdir /src
-COPY . /src
-WORKDIR /src
+COPY . /app
+WORKDIR /app
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["python", "filter.py"]
+CMD ["python", "filter.py"]
