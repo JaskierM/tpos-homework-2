@@ -3,11 +3,13 @@ version: '3'
 services:
   db:
     container_name: db
-    image: mariadb
+    image: mariadb:latest
     restart: always
-    environment:
-      MARIA_ROOT_PASSWORD: ${PSW}
     env_file: .env
+    environment:
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
     networks:
       - backend
     ports:
@@ -15,27 +17,28 @@ services:
 
   filter:
     build:
-      context: .
-      dockerfile: ./src/filter/Dockerfile
+      context: ./src/filter/
     restart: no
     env_file: .env
     depends_on:
       - db
     networks:
       - backend
+    volumes:
+      - "./data/data.csv:/src"
 
-  web:
-    build:
-      dockerfile: ./src/Dockerfile
-    restart: on-failure
-    env_file: .env
-    depends_on:
-      - db
-      - filter
-    networks:
-      - backend
-    ports:
-      - "8088:8088"
+#  web:
+#    build:
+#      dockerfile: ./src/Dockerfile
+#    restart: on-failure
+#    env_file: .env
+#    depends_on:
+#      - db
+#      - filter
+#    networks:
+#      - backend
+#    ports:
+#      - "8088:8088"
 
 networks:
   backend:
