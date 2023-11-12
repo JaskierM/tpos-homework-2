@@ -32,18 +32,18 @@ services:
     networks:
       - backend
 
-#  web:
-#    build:
-#      dockerfile: ./src/Dockerfile
-#    restart: on-failure
-#    env_file: .env
-#    depends_on:
-#      - db
-#      - filter
-#    networks:
-#      - backend
-#    ports:
-#      - "8088:8088"
+  web:
+    build:
+      context: ./src/web
+    env_file: .env
+    restart: always
+    depends_on:
+      - filter
+      - db
+    networks:
+      - backend
+    ports:
+      - "8000:8000"
 
 networks:
   backend:

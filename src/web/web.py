@@ -1,3 +1,4 @@
+import sys
 import os
 import mariadb
 
@@ -7,16 +8,28 @@ from flask import Flask, jsonify
 load_dotenv()
 app = Flask(__name__)
 
+DB_HOST = os.environ['DB_HOST']
+WEB_HOST = os.environ['WEB_HOST']
+
+MARIADB_PORT = os.environ['MARIADB_PORT']
+WEB_PORT = os.environ['WEB_PORT']
+
 MARIADB_USER = os.environ['MARIADB_USER']
-MARIADB_ROOT_PASSWORD = os.environ['MARIADB_ROOT_PASSWORDD']
+MARIADB_ROOT_PASSWORD = os.environ['MARIADB_ROOT_PASSWORD']
 MARIADB_DATABASE = os.environ['MARIADB_DATABASE']
+PEOPLE_TABLE = os.environ['PEOPLE_TABLE']
 
 
 @app.route('/',  methods=['GET'])
 def index():
-    cur = get_cursor()
-    cur.execute("SELECT * FROM people")
-    return MARIADB_USER
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(f'SELECT * FROM {PEOPLE_TABLE}')
+
+    res = {PEOPLE_TABLE: [], 'status': 200}
+    for name, age in cur:
+        res[PEOPLE_TABLE].append((name, age))
+    return jsonify(res)
 
 
 @app.route('/health',  methods=['GET'])
@@ -29,19 +42,20 @@ def not_found(_):
     return jsonify({'status': 404})
 
 
-def get_cursor():
+def get_connection():
     try:
         conn = mariadb.connect(
+            host=DB_HOST,
+            port=int(MARIADB_PORT),
             user=MARIADB_USER,
             password=MARIADB_ROOT_PASSWORD,
-            host='localhost',
-            port=3306,
             database=MARIADB_DATABASE
         )
-        return conn.cursor()
+        return conn
     except mariadb.Error as e:
         print(f'Error connecting to MariaDB Platform: {e}')
+        sys.exit(1)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host=WEB_HOST, port=int(WEB_PORT), debug=True)
