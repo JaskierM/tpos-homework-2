@@ -28,7 +28,7 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - ./data:/app/data
+      - ./data.csv:/app/data/data.csv
     networks:
       - backend
 
