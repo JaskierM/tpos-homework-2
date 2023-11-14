@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "tpos-homework-2"
+version = "0.1.0"
+description = ""
+license = "MIT"
+authors = ["Maxim Borodynya <borody.maxim@gmail.com>"]
+readme = "README.md"
+repository = "https://github.com/JaskierM/tpos-homework-2"
+keywords = ["linux", "docker", "db"]
+
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.13"
+flask = "^3.0.0"
+mariadb = "^1.1.8"
+python-dotenv = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
