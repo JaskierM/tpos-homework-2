@@ -5,10 +5,6 @@ services:
     image: mariadb
     restart: always
     env_file: .env
-    environment:
-      MARIADB_USER: ${MARIADB_USER}
-      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
-      MARIADB_DATABASE: ${MARIADB_DATABASE}
     networks:
       - backend
     ports:
