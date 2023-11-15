@@ -4,4 +4,4 @@ COPY . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
 
-CMD ["python", "filter.py"]
+CMD ["python", "filler.py"]
