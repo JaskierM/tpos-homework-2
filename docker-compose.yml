@@ -2,8 +2,8 @@ version: '3'
 
 services:
   db:
-    container_name: db
     image: mariadb
+    container_name: "db"
     restart: "always"
     env_file: .env
     networks:
@@ -17,9 +17,8 @@ services:
       retries: 60
 
   filter:
-    container_name: filter
-    build:
-      context: ./src/filter/
+    build: ./src/filter/
+    container_name: "filter"
     restart: "no"
     env_file: .env
     depends_on:
@@ -31,9 +30,8 @@ services:
       - backend
 
   web:
-    container_name: web
-    build:
-      context: ./src/web
+    build: ./src/web/
+    container_name: "web"
     env_file: .env
     restart: "always"
     depends_on:
