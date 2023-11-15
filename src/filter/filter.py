@@ -10,9 +10,9 @@ load_dotenv()
 
 DB_HOST = os.environ['DB_HOST']
 MARIADB_PORT = os.environ['MARIADB_PORT']
-MARIADB_USER = os.environ['MYSQL_USER']
-MARIADB_ROOT_PASSWORD = os.environ['MYSQL_ROOT_PASSWORD']
-MARIADB_DATABASE = os.environ['MYSQL_DATABASE']
+MYSQL_USER = os.environ['MYSQL_USER']
+MYSQL_ROOT_PASSWORD = os.environ['MYSQL_ROOT_PASSWORD']
+MYSQL_DATABASE = os.environ['MYSQL_DATABASE']
 PEOPLE_TABLE = os.environ['PEOPLE_TABLE']
 
 DATA_FILE_PATH = '/app/data/data.csv'
@@ -35,9 +35,9 @@ def get_connection():
         conn = mariadb.connect(
             host=DB_HOST,
             port=int(MARIADB_PORT),
-            user=MARIADB_USER,
-            password=MARIADB_ROOT_PASSWORD,
-            database=MARIADB_DATABASE
+            user=MYSQL_USER,
+            password=MYSQL_ROOT_PASSWORD,
+            database=MYSQL_DATABASE,
         )
         return conn
     except mariadb.Error as e:
