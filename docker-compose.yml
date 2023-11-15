@@ -3,7 +3,6 @@ version: '3'
 services:
   db:
     image: mariadb
-    container_name: "db"
     restart: "always"
     env_file: .env
     networks:
@@ -15,10 +14,13 @@ services:
       interval: 1s
       timeout: 1s
       retries: 60
+    container_name: db
 
   filter:
-    build: ./src/filter/
-    container_name: "filter"
+    image: filter
+    build:
+      context: ./src/filter/
+      dockerfile: Dockerfile
     restart: "no"
     env_file: .env
     depends_on:
@@ -28,10 +30,14 @@ services:
       - ./data.csv:/app/data/data.csv
     networks:
       - backend
+    container_name: filter
 
   web:
-    build: ./src/web/
-    container_name: "web"
+    image: web
+    build:
+      context: ./src/web/
+      dockerfile: Dockerfile
+    container_name: web
     env_file: .env
     restart: "always"
     depends_on:

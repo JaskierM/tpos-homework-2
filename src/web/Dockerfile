@@ -1,4 +1,4 @@
-FROM python:3.11
+FROM python:3.11 AS web
 
 COPY . /app
 WORKDIR /app
