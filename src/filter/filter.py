@@ -10,9 +10,9 @@ load_dotenv()
 
 DB_HOST = os.environ['DB_HOST']
 MARIADB_PORT = os.environ['MARIADB_PORT']
-MARIADB_USER = os.environ['MARIADB_USER']
-MARIADB_ROOT_PASSWORD = os.environ['MARIADB_ROOT_PASSWORD']
-MARIADB_DATABASE = os.environ['MARIADB_DATABASE']
+MARIADB_USER = os.environ['MYSQL_USER']
+MARIADB_ROOT_PASSWORD = os.environ['MYSQL_ROOT_PASSWORD']
+MARIADB_DATABASE = os.environ['MYSQL_DATABASE']
 PEOPLE_TABLE = os.environ['PEOPLE_TABLE']
 
 DATA_FILE_PATH = '/app/data/data.csv'
