@@ -14,9 +14,9 @@ WEB_HOST = os.environ['WEB_HOST']
 MARIADB_PORT = os.environ['MARIADB_PORT']
 WEB_PORT = os.environ['WEB_PORT']
 
-MYSQL_USER = os.environ['MYSQL_USER']
-MYSQL_ROOT_PASSWORD = os.environ['MYSQL_ROOT_PASSWORD']
-MYSQL_DATABASE = os.environ['MYSQL_DATABASE']
+MARIADB_USER = os.environ['MARIADB_USER']
+MARIADB_ROOT_PASSWORD = os.environ['MARIADB_ROOT_PASSWORD']
+MARIADB_DATABASE = os.environ['MARIADB_DATABASE']
 PEOPLE_TABLE = os.environ['PEOPLE_TABLE']
 
 
@@ -47,9 +47,9 @@ def get_connection():
         conn = mariadb.connect(
             host=DB_HOST,
             port=int(MARIADB_PORT),
-            user=MYSQL_USER,
-            password=MYSQL_ROOT_PASSWORD,
-            database=MYSQL_DATABASE
+            user=MARIADB_USER,
+            password=MARIADB_ROOT_PASSWORD,
+            database=MARIADB_DATABASE
         )
         return conn
     except mariadb.Error as e:
