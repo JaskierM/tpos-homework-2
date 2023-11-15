@@ -3,24 +3,23 @@ version: '3'
 services:
   db:
     image: mariadb
+    container_name: db
     restart: "always"
     env_file: .env
-    networks:
-      - backend
-    ports:
-      - "3306:3306"
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 1s
       timeout: 1s
       retries: 60
-    container_name: db
+    networks:
+      - backend
+    ports:
+      - "3306:3306"
 
-  filter:
-    image: filter
+  filler:
+    container_name: filler
     build:
-      context: ./src/filter/
-      dockerfile: Dockerfile
+      context: ./src/filler
     restart: "no"
     env_file: .env
     depends_on:
@@ -30,19 +29,16 @@ services:
       - ./data.csv:/app/data/data.csv
     networks:
       - backend
-    container_name: filter
 
   web:
-    image: web
     build:
-      context: ./src/web/
-      dockerfile: Dockerfile
+      context: ./src/web
     container_name: web
     env_file: .env
     restart: "always"
     depends_on:
-      - filter
-      - db
+      db:
+        condition: service_healthy
     networks:
       - backend
     ports:

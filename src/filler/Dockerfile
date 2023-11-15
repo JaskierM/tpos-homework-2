@@ -1,4 +1,4 @@
-FROM python:3.11 AS filter
+FROM python:3.11
 
 COPY . /app
 WORKDIR /app
