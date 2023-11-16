@@ -7,11 +7,10 @@ services:
     restart: "always"
     env_file: .env
     healthcheck:
-      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-      interval: 5s
+      test: ["CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized"]
+      interval: 10s
       timeout: 5s
       retries: 5
-
     networks:
       - backend
     ports:
