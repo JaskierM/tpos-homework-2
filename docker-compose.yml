@@ -39,6 +39,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      filler:
+        condition: service_started
     networks:
       - backend
     ports:
