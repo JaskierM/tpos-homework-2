@@ -8,9 +8,10 @@ services:
     env_file: .env
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-      interval: 1s
-      timeout: 1s
-      retries: 60
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
     networks:
       - backend
     ports:
