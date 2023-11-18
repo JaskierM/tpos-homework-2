@@ -2,7 +2,7 @@ version: '3'
 
 services:
   db:
-    image: mariadb
+    image: mariadb:latest
     container_name: db
     restart: "always"
     env_file: .env
@@ -39,6 +39,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      filler:
+        condition: service_completed_successfully
     networks:
       - backend
     ports:
