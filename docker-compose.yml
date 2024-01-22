@@ -8,7 +8,7 @@ services:
     env_file: .env
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized"]
-      interval: 5s
+      interval: 10s
       timeout: 5s
       retries: 5
     networks:
@@ -19,9 +19,8 @@ services:
   filler:
     container_name: filler
     build:
-      context: ./src/filler/filler.py
-      dockerfile: ./src/filler/Dockerfile
-    restart: "no"
+      context: ./src/filler
+    restart: always
     env_file: .env
     depends_on:
       db:
@@ -30,7 +29,6 @@ services:
       - ./data.csv:/app/data/data.csv
     networks:
       - backend
-     command: python ./src/filler/filler.py
 
   web:
     build:
